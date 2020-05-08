@@ -6,6 +6,8 @@
  *
  * @package Superhero
  * @since Superhero 1.0
+ * @child Meggan Green
+ * edited 2017-03-03
  */
 ?>
 
@@ -15,9 +17,15 @@
     <footer id="colophon" class="site-footer" role="contentinfo">
         <div class="site-info">
             <?php do_action( 'superhero_credits' ); ?>
-            <a href="http://wordpress.org/" title="<?php esc_attr_e( 'A Semantic Personal Publishing Platform', 'superhero' ); ?>" rel="generator"><?php printf( __( 'Proudly powered by %s', 'superhero' ), 'WordPress' ); ?></a>
+            <a href="http://wordpress.org/" title="<?php esc_attr_e( 'A Semantic Personal Publishing Platform', 'superhero' ); ?>" rel="generator"><?php printf( __( '%s', 'superhero' ), 'WordPress' ); ?></a>
             <span class="sep"> | </span>
-            <?php printf( __( 'Theme: %1$s by %2$s.', 'superhero' ), 'Superhero', '<a href="https://wordpress.com/themes/" rel="designer">WordPress.com</a>' ); ?>
+            <?php printf( __( '%1$s theme by %2$s', 'superhero' ), '<a href="http://theme.wordpress.com/themes/superhero/" rel="designer">Superhero</a>', '<a href="http://automattic.com/" rel="designer">Automattic</a>' ); ?>
+            <span class="sep"> | </span>
+            <?php printf( __( 'Mods by %s', 'superhero' ), '<a href="http://meggangreen.com" rel="designer">Meggan</a>' ); ?>
+            <span class="sep"> &nbsp; </span>
+            <span class="maaalogin">
+            <?php printf( __( '%s', 'superhero' ), '<a href="http://meggangreen.com/maaa/wpf/wp-admin/" rel="designer">Login</a>' ); ?>
+            </span>
         </div><!-- .site-info -->
     </footer><!-- #colophon .site-footer -->
     </div><!-- #colophon-wrap -->

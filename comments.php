@@ -8,40 +8,33 @@
  * located in the functions.php file.
  *
  * @package Superhero
- * @since Superhero 1.0
+ * @package Superhero Child Meggan Green
+ * edited 2017-03-03
+ *
  */
 
-/*
- * If the current post is protected by a password and
- * the visitor has not yet entered the password we will
- * return early without loading the comments.
- */
+//Return early without loading the comments if pword required and not validated.
 if ( post_password_required() )
     return;
 ?>
 
 <div id="comments" class="comments-area">
 
-    <?php // You can start editing here -- including this comment! ?>
-
     <?php if ( have_comments() ) : ?>
+
         <h2 class="comments-title">
             <?php
-                printf( _n( 'One thought on &ldquo;%2$s&rdquo;', '%1$s thoughts on &ldquo;%2$s&rdquo;', get_comments_number(), 'superhero' ),
-                    number_format_i18n( get_comments_number() ), '<span>' . get_the_title() . '</span>' );
+            if ( get_comments_number() > 9 ) :
+                printf( 'There are %1$s comments on &ldquo;%2$s&rdquo;', number_format_i18n( get_comments_number() ), '<span>' . get_the_title() . '</span>' );
+            else :
+                printf( _n( 'There is one comment on &ldquo;%2$s&rdquo;', 'There are %1$s comments on &ldquo;%2$s&rdquo;', get_comments_number(), 'superhero' ),
+                    childmg_n2w( get_comments_number() ), '<span>' . get_the_title() . '</span>' );
+            endif;
             ?>
         </h2>
 
         <ol class="commentlist">
-            <?php
-                /* Loop through and list the comments. Tell wp_list_comments()
-                 * to use superhero_comment() to format the comments.
-                 * If you want to overload this in a child theme then you can
-                 * define superhero_comment() and that will be used instead.
-                 * See superhero_comment() in inc/template-tags.php for more.
-                 */
-                wp_list_comments( array( 'callback' => 'superhero_comment' ) );
-            ?>
+            <?php wp_list_comments( array( 'callback' => 'superhero_comment' ) ); //redefine callback function ?>
         </ol><!-- .commentlist -->
 
         <?php if ( get_comment_pages_count() > 1 && get_option( 'page_comments' ) ) : // are there comments to navigate through ?>
@@ -61,6 +54,6 @@ if ( post_password_required() )
         <p class="nocomments"><?php _e( 'Comments are closed.', 'superhero' ); ?></p>
     <?php endif; ?>
 
-    <?php comment_form(); ?>
+    <?php comment_form(); //display the comment form ?>
 
 </div><!-- #comments .comments-area -->

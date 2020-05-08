@@ -44,7 +44,7 @@
 
     <footer class="entry-meta">
         <?php if ( ! post_password_required() && ( comments_open() || '0' != get_comments_number() ) ) : ?>
-        <span class="comments-link"><?php comments_popup_link( __( '', 'superhero' ), __( '1 Comment', 'superhero' ), __( '% Comments', 'superhero' ) ); ?></span>
+        <span class="comments-link"><?php comments_popup_link( __( 'Start the Discussion', 'superhero' ), __( 'One Person Commented', 'superhero' ), __( 'People Are Commenting', 'superhero' ) ); ?></span>
         <?php endif; ?>
 
         <?php edit_post_link( __( 'Edit', 'superhero' ), '<span class="sep"> | </span><span class="edit-link">', '</span>' ); ?>

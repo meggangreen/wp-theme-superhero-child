@@ -82,48 +82,14 @@ function _category_dropdown_filter( $cat_args ) {
 add_filter( 'widget_categories_dropdown_args', '_category_dropdown_filter' );
 
 
-/**************************
-  *** CUSTOM DATE_DIFF ***
-***************************/
-function maaa_date_diff($dateinput1, $dateinput2, $daysum) {
-    // Calculates the time delta and returns both the interval and a formatted string
-
-    $maaa_pluralize = function($nb,$str){return $nb>1?$str.'s':$str;}; // https://www.php.net/manual/en/dateinterval.format.php#96768
-    $ts1 = strtotime($dateinput1);
-    $ts2 = strtotime($dateinput2);
-    $diff = ($ts2 - $ts1);
-    $diff = $daysum * 86400 + $diff;
-    if ( $diff > 31536000 ) {
-        $y_diff = floor($diff / (365 * 86400));
-        $d_diff = floor(($diff - $y_diff * 365 * 86400) / 86400);
-    } else {
-        $y_diff = 0;
-        $d_diff = floor($diff / 86400);
-    } //endif
-    if ( $y_diff > 0 ) {
-        $y_diff_str = ' ' . $y_diff . $maaa_pluralize($y_diff, ' year');
-    } else {
-        $y_diff_str = '';
-    } //endif
-    if ( $d_diff > 0 ) {
-        $d_diff_str = ' ' . $d_diff . $maaa_pluralize($d_diff, ' day');
-    } else {
-        $d_diff_str = '';
-    } //endif
-    $diff = $diff / 86400;
-    $diff_str = $y_diff_str . $d_diff_str;
-    return array($diff_str, $diff);
-}
-
-
 /**********************************
   *** CONVERT NUMBERS TO WORDS ***
 ***********************************/
-function childmg_n2w($mg_number) {
+function num_to_word($num) {
     // Converts an integer to a spelled-out string
     // simplified from http://www.karlrixon.co.uk/writing/convert-numbers-to-words-with-php/
 
-    $mg_dictionary  = array(
+    $words  = array(
         1 => 'one',
         2 => 'two',
         3 => 'three',
@@ -135,8 +101,33 @@ function childmg_n2w($mg_number) {
         9 => 'nine'
     );
 
-    $mg_string = $mg_dictionary[$mg_number];
-    return $mg_string;
+    return (array_key_exists($num, $words) ? $words[$num] : $num);
+}
+
+
+/**************************
+  *** CUSTOM DATE_DIFF ***
+***************************/
+function maaa_date_diff($date1, $date2, $daysum) {
+    // Calculates the time delta and returns both the interval and a formatted string
+
+    $pluralize = function($nb,$str){return $nb>1?$str.'s':$str;};  // https://www.php.net/manual/en/dateinterval.format.php#96768
+    
+    $diff_seconds = $daysum * 86400 + (strtotime($date2) - strtotime($date1));
+    $diff_days = $diff_seconds / 86400;
+  
+    $y_diff = floor($diff_seconds / (365 * 86400));
+    $d_diff = floor(($diff_seconds - $y_diff * 365 * 86400) / 86400);
+    
+    $diff_str = '';
+    if ( $y_diff > 0 ) {
+        $diff_str = $diff_str . ' ' . num_to_word($y_diff) . $pluralize($y_diff, ' year');
+    }
+    if ( $d_diff > 0 ) {
+        $diff_str = $diff_str . ' ' . num_to_word($d_diff) . $pluralize($d_diff, ' day');
+    }
+    
+    return array($diff_str, $diff_days);
 }
 
 

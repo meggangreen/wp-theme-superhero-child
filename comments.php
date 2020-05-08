@@ -28,7 +28,7 @@ if ( post_password_required() )
                 printf( 'There are %1$s comments on &ldquo;%2$s&rdquo;', number_format_i18n( get_comments_number() ), '<span>' . get_the_title() . '</span>' );
             else :
                 printf( _n( 'There is one comment on &ldquo;%2$s&rdquo;', 'There are %1$s comments on &ldquo;%2$s&rdquo;', get_comments_number(), 'superhero' ),
-                    childmg_n2w( get_comments_number() ), '<span>' . get_the_title() . '</span>' );
+                    num_to_word( get_comments_number() ), '<span>' . get_the_title() . '</span>' );
             endif;
             ?>
         </h2>

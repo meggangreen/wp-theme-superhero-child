@@ -1,12 +1,11 @@
 /*
 Theme Name: Superhero Child
-Theme URI:
+Theme URI:  
 Description:    Meggan's mods on Superhero by Automattic (https://theme.wordpress.com/themes/superhero/) (http://automattic.com/)
 Author:     Meggan Green
 Author URI: http://meggangreen.com
 Template:   superhero
 Version:    1.0
-Edited:     2017-06-02
 
 This theme, like WordPress, is licensed under the GPL.
 
@@ -357,7 +356,7 @@ a:hover, a:focus, a:active {
 }
 
 /*****************
-  *** CONTENT ***
+  *** CONTENT *** 
 ******************/
 /* Headings */
 h1,h2,h3,h4,h5,h6 {
@@ -460,11 +459,14 @@ h1.entry-title, h2.entry-title {
     clear: both;
     color: #666;
     font-family: 'Roboto Slab Reg', 'Times New Roman', serif;
-    font-size: 1em;
+    font-size: 100%;
     font-weight: 400;
     line-height: 1.2em;
     margin: 0px 25px;
     padding: 0px;
+}
+footer.entry-meta {
+    font-size: 90%;
 }
 .entry-meta a:hover, .entry-meta a:focus, .entry-meta a:active,
 footer.entry-meta a:hover, footer.entry-meta a:focus, footer.entry-meta a:active {
@@ -511,11 +513,11 @@ a.anchor-jump {
     font-size: 1.2em;
     font-family: 'Roboto Slab Reg', 'Times New Roman', serif;
 }
-.site-content .nav-previous a:hover,
-.site-content .nav-previous a:focus,
+.site-content .nav-previous a:hover, 
+.site-content .nav-previous a:focus, 
 .site-content .nav-previous,
-.site-content .nav-next a:hover,
-.site-content .nav-next a:focus,
+.site-content .nav-next a:hover, 
+.site-content .nav-next a:focus, 
 .site-content .nav-next a:active {
     color: #1188ee;
 }
@@ -674,7 +676,7 @@ h3.comment-reply-title {
     width: 57%;
     font-size: 1em;
     color: #333;
-
+    
 }
 .widget #searchsubmit {
     background: #7ad60f;

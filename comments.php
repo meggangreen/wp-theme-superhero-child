@@ -24,12 +24,8 @@ if ( post_password_required() )
 
         <h2 class="comments-title">
             <?php
-            if ( get_comments_number() > 9 ) :
-                printf( 'There are %1$s comments on &ldquo;%2$s&rdquo;', number_format_i18n( get_comments_number() ), '<span>' . get_the_title() . '</span>' );
-            else :
-                printf( _n( 'There is one comment on &ldquo;%2$s&rdquo;', 'There are %1$s comments on &ldquo;%2$s&rdquo;', get_comments_number(), 'superhero' ),
-                    num_to_word( get_comments_number() ), '<span>' . get_the_title() . '</span>' );
-            endif;
+                $num_comments = get_comments_number();
+                printf( '%1$s %2$s:', num_to_word($num_comments), pluralize($num_comments,'comment') );
             ?>
         </h2>
 
@@ -49,7 +45,7 @@ if ( post_password_required() )
 
     <?php
         // If comments are closed and there are comments, let's leave a little note, shall we?
-        if ( ! comments_open() && '0' != get_comments_number() && post_type_supports( get_post_type(), 'comments' ) ) :
+        if ( ! comments_open() && '0' != $num_comments && post_type_supports( get_post_type(), 'comments' ) ) :
     ?>
         <p class="nocomments"><?php _e( 'Comments are closed.', 'superhero' ); ?></p>
     <?php endif; ?>

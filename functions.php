@@ -90,6 +90,7 @@ function num_to_word($num) {
     // simplified from http://www.karlrixon.co.uk/writing/convert-numbers-to-words-with-php/
 
     $words  = array(
+        0 => 'zero',
         1 => 'one',
         2 => 'two',
         3 => 'three',
@@ -105,13 +106,21 @@ function num_to_word($num) {
 }
 
 
+/*******************
+  *** PLURALIZE ***
+********************/
+function pluralize($qty, $unit) {
+    // https://www.php.net/manual/en/dateinterval.format.php#96768
+
+    return ($qty != 1 ? $unit . 's' : $unit);
+}
+
+
 /**************************
   *** CUSTOM DATE_DIFF ***
 ***************************/
 function maaa_date_diff($date1, $date2, $daysum) {
     // Calculates the time delta and returns both the interval and a formatted string
-
-    $pluralize = function($nb,$str){return $nb>1?$str.'s':$str;};  // https://www.php.net/manual/en/dateinterval.format.php#96768
     
     $diff_seconds = $daysum * 86400 + (strtotime($date2) - strtotime($date1));
     $diff_days = $diff_seconds / 86400;
@@ -121,10 +130,10 @@ function maaa_date_diff($date1, $date2, $daysum) {
     
     $diff_str = '';
     if ( $y_diff > 0 ) {
-        $diff_str = $diff_str . ' ' . num_to_word($y_diff) . $pluralize($y_diff, ' year');
+        $diff_str = $diff_str . ' ' . num_to_word($y_diff) . pluralize($y_diff, ' year');
     }
     if ( $d_diff > 0 ) {
-        $diff_str = $diff_str . ' ' . num_to_word($d_diff) . $pluralize($d_diff, ' day');
+        $diff_str = $diff_str . ' ' . num_to_word($d_diff) . pluralize($d_diff, ' day');
     }
     
     return array($diff_str, $diff_days);

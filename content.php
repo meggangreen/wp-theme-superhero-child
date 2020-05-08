@@ -4,7 +4,7 @@
  *
  * @package Superhero
  * @package Superhero Child Meggan Green
- * 2017-03-03
+ * edited 2020-05-07
  *
  */
 ?>
@@ -44,7 +44,7 @@
 
     <footer class="entry-meta">
         <?php if ( ! post_password_required() && ( comments_open() || '0' != get_comments_number() ) ) : ?>
-        <span class="comments-link"><?php comments_popup_link( __( 'Leave a comment', 'superhero' ), __( '1 Comment', 'superhero' ), __( '% Comments', 'superhero' ) ); ?></span>
+        <span class="comments-link"><?php comments_popup_link( __( '', 'superhero' ), __( '1 Comment', 'superhero' ), __( '% Comments', 'superhero' ) ); ?></span>
         <?php endif; ?>
 
         <?php edit_post_link( __( 'Edit', 'superhero' ), '<span class="sep"> | </span><span class="edit-link">', '</span>' ); ?>

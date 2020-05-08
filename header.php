@@ -48,7 +48,7 @@
               </h1>
               <!-- Get current days tally and country -->
               <?php $maaaDays = maaa_stats_header()[0]; ?>
-              <h2 class="site-immedstats">Meggan lived abroad for <?php echo $maaaDays; ?>.She'd like to do it again.</h2>
+              <h2 class="site-immedstats">Meggan lived abroad for <?php echo $maaaDays; ?>. She'd like to do it again.</h2>
             </td>
           </tr>
           <tr>

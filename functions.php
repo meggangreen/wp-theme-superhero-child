@@ -6,6 +6,10 @@
   *** DASHBOARD COLUMNS ***
 ****************************/
 function wpse126301_dashboard_columns() {
+    // Make dashboard only 1 column for developing on netbook - 2014
+    // Updated to two when I had a bigger screen again - 2018
+    // https://wordpress.stackexchange.com/questions/126301/wordpress-3-8-dashboard-1-column-screen-options
+
     add_screen_option(
         'layout_columns',
         array(
@@ -16,56 +20,75 @@ function wpse126301_dashboard_columns() {
 }
 add_action( 'admin_head-index.php', 'wpse126301_dashboard_columns' );
 
+
 /****************************
   *** ENQUEUE CUSTOM JS ***
 ****************************/
 function childmg_js() {
+    // add custom js file
+
     wp_enqueue_script( 'childmg_script', get_stylesheet_directory_uri() . '/javascript.js', array( 'jquery' ) );
 }
 add_action( 'wp_enqueue_scripts', 'childmg_js' );
+
 
 /******************************
   *** ENQUEUE STYLESHEETS ***
 ******************************/
 function childmg_stylesheet() {
+    // add custom css file
+
     wp_enqueue_style( 'style', get_template_directory_uri() . '/style.css' );
     wp_enqueue_style( 'superhero-child', get_stylesheet_directory_uri() . '/style.css', array('style') );
 }
-
 add_action( 'wp_enqueue_scripts', 'childmg_stylesheet' );
 
-/********************************************
-  *** STRIP MOST NON-NUMERIC CHARACTERS ***
-********************************************/
+
+/************************************************
+  *** STRIP MANY NON-ALPHANUMERIC CHARACTERS ***
+************************************************/
 function maaa_filterinput($maaa_input) {
+    // Strips some characters from input to help mitigate unwanted SQL injection
+    // used for db input to maaa plugin; relies on WP to protect posts, comments, etc.
+
     $maaa_pattern = "/[^A-Za-z0-9 &!(),-.:=\'?$;]/";
     $maaa_replacement = "";
     return preg_replace($maaa_pattern, $maaa_replacement, $maaa_input, -1);
-} //end function
+}
+
 
 /**************************************
   *** REMOVE MORE-LINK PAGE SCROLL ***
 ***************************************/
 function remove_more_link_jump( $link ) {
+    // https://codex.wordpress.org/Customizing_the_Read_More#Prevent_Page_Scroll_When_Clicking_the_More_Link
+
     $link = preg_replace( '|#more-[0-9]+|', '', $link );
     return $link;
-} //end function
+}
 add_filter( 'the_content_more_link', 'remove_more_link_jump' );
+
 
 /***************************************
   *** CHANGE 'SELECT CATEGORY' TEXT ***
 ****************************************/
 function _category_dropdown_filter( $cat_args ) {
+    // Changes the text in the category filter
+    // https://stackoverflow.com/questions/14079259/change-default-select-category-text-in-categories-dropdown-widget-in-wordpress
+
         $cat_args['show_option_none'] = __('Select Country');
         return $cat_args;
-} //end function
+}
 add_filter( 'widget_categories_dropdown_args', '_category_dropdown_filter' );
+
 
 /**************************
   *** CUSTOM DATE_DIFF ***
 ***************************/
 function maaa_date_diff($dateinput1, $dateinput2, $daysum) {
-    $maaa_pluralize = function($nb,$str){return $nb>1?$str.'s':$str;}; // adds plurals
+    // Calculates the time delta and returns both the interval and a formatted string
+
+    $maaa_pluralize = function($nb,$str){return $nb>1?$str.'s':$str;}; // https://www.php.net/manual/en/dateinterval.format.php#96768
     $ts1 = strtotime($dateinput1);
     $ts2 = strtotime($dateinput2);
     $diff = ($ts2 - $ts1);
@@ -90,13 +113,15 @@ function maaa_date_diff($dateinput1, $dateinput2, $daysum) {
     $diff = $diff / 86400;
     $diff_str = $y_diff_str . $d_diff_str;
     return array($diff_str, $diff);
-} //end function
+}
+
 
 /**********************************
   *** CONVERT NUMBERS TO WORDS ***
 ***********************************/
 function childmg_n2w($mg_number) {
-    //simplified from http://www.karlrixon.co.uk/writing/convert-numbers-to-words-with-php/
+    // Converts an integer to a spelled-out string
+    // simplified from http://www.karlrixon.co.uk/writing/convert-numbers-to-words-with-php/
 
     $mg_dictionary  = array(
         1 => 'one',
@@ -114,10 +139,13 @@ function childmg_n2w($mg_number) {
     return $mg_string;
 }
 
+
 /***************************************
   *** PRESENT DAYS & COUNTRY HEADER ***
 ****************************************/
 function maaa_stats_header(){
+    // Returns formatted current country & number of days in country for site header
+
     global $wpdb;
     $wpdb->show_errors();
 
@@ -141,7 +169,8 @@ function maaa_stats_header(){
         $maaa_prescountry_url = '<a href="' . $maaa_prescountry_url . '" title="' . $maaa_prescountry . '">' . $maaa_prescountry . '</a>';
     } //end if
     return array($maaa_daytotal, $maaa_prescountry_url);
-} //end function
+}
+
 
 /************************
   *** COMMENTS LOOP ***
@@ -154,6 +183,8 @@ function maaa_stats_header(){
  * @child Meggan Green
  */
 function superhero_comment( $comment, $args, $depth ) {
+    // REMOVE
+    // Over-writing in order to use custom avatars, but the project never happened
     $GLOBALS['comment'] = $comment;
     switch ( $comment->comment_type ) :
         case 'pingback' :
@@ -195,7 +226,8 @@ function superhero_comment( $comment, $args, $depth ) {
     <?php
     break;
     endswitch;
-} //end function
+}
+
 
 /*************************
   *** ENTRY META DATA ***
@@ -236,6 +268,7 @@ function superhero_posted_on() {
 } //end function
 endif;
 
+
 /*************************
   *** ENTRY META DATA ***
 **************************/
@@ -255,10 +288,13 @@ function maaa_content_footer() {
     edit_post_link( __( 'Edit', 'superhero' ), '<span class="sep"> | </span><span class="edit-link">', '</span>' );
 } //end function
 
+
 /******************************
   *** COUNTRY GALLERY URL ***
 ******************************/
 function maaa_country_gallery( $maaa_singlecattitle ){
+    // Returns the text & link to a country gallery for a country archive page
+
     global $wpdb;
     $wpdb->show_errors();
 
@@ -267,12 +303,15 @@ function maaa_country_gallery( $maaa_singlecattitle ){
     $maaa_pages = get_all_page_ids();
     foreach ($maaa_pages as $maaa_pageid) if (get_the_title($maaa_pageid) == $maaa_pquery) return sprintf( __( '%s', 'superhero' ), ' &nbsp; | &nbsp; <a href="' . get_page_link($maaa_pageid) . '">Gallery</a>' );
     return false;
-} //end function
+}
+
 
 /***********************************
   *** COUNTRY GALLERY FEAT-IMG ***
 ***********************************/
 function maaa_country_featimg( $maaa_singlecattitle ){
+    // Returns the feature image from a country gallery page for use in a country archive page
+
     global $wpdb;
     $wpdb->show_errors();
 
@@ -281,6 +320,6 @@ function maaa_country_featimg( $maaa_singlecattitle ){
     $maaa_pages = get_all_page_ids();
     foreach ($maaa_pages as $maaa_pageid) if (get_the_title($maaa_pageid) == $maaa_pquery) if ( '' != get_the_post_thumbnail($maaa_pageid) ) return $maaa_pageid;
     return '0';
-} //end function
+}
 
 ?>
